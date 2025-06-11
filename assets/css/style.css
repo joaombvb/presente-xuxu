@@ -1,0 +1,61 @@
+/* Mobile-first, proporção 9:16 para o slider */
+body{
+    background-color: #7469B6;
+    color: #FFE6E6;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 0 1rem;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  padding-top: calc(16 / 9 * 100%); /* mantém 9:16 */
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+}
+
+.slide-image,
+.slide-image.ghibli {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-image.ghibli {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Contador */
+.contador {
+  text-align: center;
+  margin: 1.5rem 0;
+  font-size: 1rem;
+}
+
+/* Player */
+.player {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Tamanho mínimo para touch */
+.slider, .slide-image, .slide-image.ghibli {
+  touch-action: manipulation;
+}
