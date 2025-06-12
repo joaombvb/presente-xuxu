@@ -1,8 +1,8 @@
 // Configurações
 const slideInterval = 3500;
 const startDate = new Date(2024, 0, 5, 15, 34, 0);
-const heartIntervalDelay = 500;     // intervalo entre corações (ms)
-const heartDuration = 5000;         // duração de geração de corações (ms)
+const heartIntervalDelay = 500;     
+const heartDuration = 10000;         
 let heartInterval;
 
 // Slider
