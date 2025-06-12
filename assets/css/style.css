@@ -16,26 +16,6 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-.title {
-  text-align: center;
-}
-
-.title p {
-  font-size: 2rem;
-  font-weight: 800;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-  /* Degradê vertical do rosa claro ao rosa intenso */
-  background: linear-gradient(to bottom, #FFC1CC 40%, #FF476B 80%, #E11D48 100%);
-  /* Clipa o background no texto e torna o texto transparente */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  display: inline-block; /* para que o clip funcione corretamente */
-  
-}
-
-
 .container {
   max-width: 500px;
   width: 100%;
