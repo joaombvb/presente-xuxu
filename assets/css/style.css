@@ -1,20 +1,69 @@
-/* Mobile-first, proporção 9:16 para o slider */
-body{
-    background-color: #7469B6;
-    color: #FFE6E6;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+/* Centralizar todo o conteúdo da página */
+html, body {
+  height: 100%;
+  margin: 0;
 }
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #030d21;
+  color: #f3f4f6;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.title {
+  text-align: center;
+}
+
+.title p {
+  font-size: 2rem;
+  font-weight: 800;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  /* Degradê vertical do rosa claro ao rosa intenso */
+  background: linear-gradient(to bottom, #FFC1CC 40%, #FF476B 80%, #E11D48 100%);
+  /* Clipa o background no texto e torna o texto transparente */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block; /* para que o clip funcione corretamente */
+  
+}
+
 
 .container {
   max-width: 500px;
-  margin: auto;
-  padding: 0 1rem;
+  width: 100%;
+  padding: 1.5rem;
+  box-sizing: border-box;
 }
 
+/* Contador */
+.contador {
+  text-align: center;
+  margin: 2rem 0;
+  font-size: 1rem;
+  font-weight: 400;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#counter {
+  font-weight: 600;
+}
+
+/* Slider: altura responsiva menor e bordas arredondadas */
 .slider {
   position: relative;
   width: 100%;
-  padding-top: calc(16 / 9 * 100%); /* mantém 9:16 */
+  height: 400px;                
+  border-radius: 12px;    
   overflow: hidden;
+  margin-bottom: 1rem;
 }
 
 .slide {
@@ -23,6 +72,7 @@ body{
   left: 0;
   width: 100%;
   height: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.5s ease;
 }
 
@@ -34,6 +84,8 @@ body{
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .slide-image.ghibli {
@@ -42,20 +94,36 @@ body{
   transition: opacity 0.3s ease;
 }
 
-/* Contador */
-.contador {
-  text-align: center;
-  margin: 1.5rem 0;
-  font-size: 1rem;
-}
-
 /* Player */
 .player {
   text-align: center;
   margin-bottom: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Tamanho mínimo para touch */
-.slider, .slide-image, .slide-image.ghibli {
-  touch-action: manipulation;
+.heart-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+.heart {
+  position: absolute;
+  bottom: 0;                /* inicia na base */
+  font-size: 24px;
+  opacity: 1;
+  animation: floatUp 5s ease-out forwards;
+}
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) scale(1.5);
+    opacity: 0;
+  }
 }

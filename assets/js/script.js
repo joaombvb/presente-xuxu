@@ -1,70 +1,60 @@
 // Configurações
-const slideInterval = 5000; // tempo entre slides em ms
-const startDate = new Date(2024, 0, 5, 15, 34, 0); // 2024-01-05 15:34:00
+const slideInterval = 3500;
+const startDate = new Date(2024, 0, 5, 15, 34, 0);
+const heartIntervalDelay = 500;     // intervalo entre corações (ms)
+const heartDuration = 5000;         // duração de geração de corações (ms)
+let heartInterval;
 
 // Slider
 const slider = document.getElementById('slider');
-let slides = [];
-let current = 0;
-let autoPlay;
-
+let slides = [], current = 0;
 function initSlider() {
   slides = Array.from(slider.children);
   slides.forEach((slide, idx) => {
     slide.style.transform = `translateX(${idx * 100}%)`;
-
-    // touch events para ghibli
-    const orig = slide.querySelector('.slide-image');
     const ghibli = slide.querySelector('.slide-image.ghibli');
-
-    slide.addEventListener('touchstart', () => {
-      ghibli.style.opacity = '1';
-    });
-    slide.addEventListener('touchend', () => {
-      ghibli.style.opacity = '0';
-    });
+    slide.addEventListener('touchstart', () => ghibli.style.opacity = '1');
+    slide.addEventListener('touchend',   () => ghibli.style.opacity = '0');
   });
-  autoPlay = setInterval(nextSlide, slideInterval);
+  setInterval(() => {
+    current = (current + 1) % slides.length;
+    slides.forEach((s, i) => s.style.transform = `translateX(${100 * (i - current)}%)`);
+  }, slideInterval);
 }
 
-function nextSlide() {
-  current = (current + 1) % slides.length;
-  slides.forEach((slide, idx) => {
-    slide.style.transform = `translateX(${100 * (idx - current)}%)`;
-  });
-}
-
-// Contador Dinâmico
+// Contador
 function updateCounter() {
   const now = new Date();
-  let diff = now - startDate; // ms
-
-  const msInSec = 1000;
-  const msInMin = msInSec * 60;
-  const msInHour = msInMin * 60;
-  const msInDay = msInHour * 24;
-  const msInMonth = msInDay * 30;
-  const msInYear = msInDay * 365;
-
-  const years = Math.floor(diff / msInYear);
-  diff -= years * msInYear;
-  const months = Math.floor(diff / msInMonth);
-  diff -= months * msInMonth;
-  const days = Math.floor(diff / msInDay);
-  diff -= days * msInDay;
-  const hours = Math.floor(diff / msInHour);
-  diff -= hours * msInHour;
-  const minutes = Math.floor(diff / msInMin);
-  diff -= minutes * msInMin;
-  const seconds = Math.floor(diff / msInSec);
-
+  let diff = now - startDate;
+  const ms = { sec: 1000, min: 60000, hr: 3600000, day: 86400000, mo: 2592000000, yr: 31536000000 };
+  const years = Math.floor(diff/ms.yr); diff -= years*ms.yr;
+  const months = Math.floor(diff/ms.mo); diff -= months*ms.mo;
+  const days = Math.floor(diff/ms.day); diff -= days*ms.day;
+  const hours = Math.floor(diff/ms.hr); diff -= hours*ms.hr;
+  const minutes = Math.floor(diff/ms.min); diff -= minutes*ms.min;
+  const seconds = Math.floor(diff/ms.sec);
   document.getElementById('counter').textContent =
-    `${years} ano(s) ${months} mês(es) ${days} dia(s) ` +
-    `${hours}h ${minutes}m ${seconds}s`;
+    `${years} ano(s) ${months} mês(es) ${days} dia(s) ${hours}h ${minutes}m ${seconds}s`;
+}
+
+// Corações flutuantes
+function initHearts() {
+  const container = document.querySelector('.heart-container');
+  heartInterval = setInterval(() => createHeart(container), heartIntervalDelay);
+  setTimeout(() => clearInterval(heartInterval), heartDuration);
+}
+function createHeart(container) {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.textContent = '❤️';
+  heart.style.left = Math.random() * 100 + '%';
+  container.appendChild(heart);
+  heart.addEventListener('animationend', () => heart.remove());
 }
 
 // Inicialização
 window.addEventListener('DOMContentLoaded', () => {
+  initHearts();
   initSlider();
   updateCounter();
   setInterval(updateCounter, 1000);
